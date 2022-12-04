@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class TelaTeste extends JFrame {
@@ -74,9 +75,12 @@ public class TelaTeste extends JFrame {
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("Bom dia garoto");
 				try {
 					Connection con = Conexao.faz_conexao();
-					String sql = "select * from projeto_pi where nome=? and senha=?";
+					String sql = "SELECT * FROM projeto_pi.usuarios";
+					
+					System.out.println("Cogumelos");
 					
 					PreparedStatement stmt = con.prepareStatement(sql);
 					
@@ -85,15 +89,18 @@ public class TelaTeste extends JFrame {
 					
 					ResultSet rs = stmt.executeQuery(sql);
 					if(rs.next()) {
+						
+						System.out.println("FINALMENTE");
+						
 						JOptionPane.showMessageDialog(null, "Esse usuario existe!");
 					} else {
 						JOptionPane.showMessageDialog(null, "Esse usuario não existe!");
 					}
 					
 					stmt.close();
-					stmt.close();
-				} catch (Exception e2) {
-					// TODO: handle exception
+					con.close();
+				} catch (SQLException e2) {
+					e2.printStackTrace();
 				}
 				
 			}
