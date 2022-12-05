@@ -4,6 +4,10 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import conexao_view.Conexao;
 import javax.swing.JButton;
 import java.awt.Color;
 
@@ -89,16 +94,30 @@ public class PrimeiraTela {
 		botaoEntrar.setBounds(342, 418, 150, 25);
 		botaoEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//EU FIZ O BOTÃO TER UMA AÇÃO, ASSIM QUE ELE É CLICADO COM O USUARIO CERTO, ELE APARECE A MSG BEM VINDO
-				if (checkLogin(txtUsuario.getText(), new String (campoSenha.getPassword()))) {
-					JOptionPane.showMessageDialog(null, "Bem vindo ao sistema garotinho");
-				} else {
-					//SENÃO VAI DIZER QUE O DADO É INVALIDADO
-					JOptionPane.showMessageDialog(null, "Dados Invalidados!","Erro",JOptionPane.ERROR_MESSAGE);
+				try {
+					Connection conn = Conexao.faz_conexao();
+					String sql = "select * from projeto_pi.usuarios where (email = ? and senha = ?)";
 					
+					PreparedStatement stmt = conn.prepareStatement(sql);
+					
+					stmt.setString(1, txtUsuario.getText());
+					stmt.setString(2, new String(campoSenha.getPassword()));
+					
+					ResultSet rs = stmt.executeQuery();
+					if(rs.next()) {
+						
+						JOptionPane.showMessageDialog(null, "Esse usuario existe!");
+					} else {
+						JOptionPane.showMessageDialog(null, "Usuario / Senha incorretas!","Erro 404",JOptionPane.ERROR_MESSAGE);
+					}
+					
+					stmt.close();
+					conn.close();
+					
+				} catch (SQLException e2) {
+					e2.printStackTrace();
 				}
-				
-			}
+			}				
 		});
 		botaoEntrar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		frame.getContentPane().add(botaoEntrar);
@@ -110,12 +129,6 @@ public class PrimeiraTela {
 				// A FUNÇÃO DO BOTÃO É CHAMAR UMA TELA E DEIXAR ELA VISIVEL;
 				TelaCadastro cadastrotela = new TelaCadastro();
 				cadastrotela.setVisible(true);
-				setVisible(false);
-				
-			}
-
-			private void setVisible(boolean b) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -127,10 +140,6 @@ public class PrimeiraTela {
 		lblNewLabel.setForeground(new Color(0, 0, 0));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		frame.getContentPane().add(lblNewLabel);
-	}
-	//ISSO É UM EXEMPLO DE UMA "CONTA", POR ENQUANTO NÃO TEM NADA LIGADO AO BANCO DE DADOS
-	public boolean checkLogin(String login, String senha) {
-		return login.equals("usuario") && senha.equals("12345");
-	//O USUARIO É USUARIO E A SENHA É 12345
+	
 	}
 }
