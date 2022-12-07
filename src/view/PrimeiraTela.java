@@ -16,12 +16,19 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import conexao_view.Conexao;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.Cursor;
 
-public class PrimeiraTela {
+public class PrimeiraTela extends JFrame {
 
-	private JFrame frame;
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField txtUsuario;
 	private JPasswordField campoSenha;
 
@@ -49,7 +56,7 @@ public class PrimeiraTela {
 			public void run() {
 				try {
 					PrimeiraTela window = new PrimeiraTela();
-					window.frame.setVisible(true);
+					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -66,64 +73,59 @@ public class PrimeiraTela {
 
 	//AQUI TEM OS NOMES DAS VARIAVEIS DA TELA, TEM O LABEL, O BOTÃO ETC
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 887, 659);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		
-		JLabel lblUsuario = new JLabel("Email ou Celular");
-		lblUsuario.setBounds(316, 231, 200, 14);
-		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 15));
-		frame.getContentPane().add(lblUsuario);
+		setBounds(100, 100, 828, 626);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().setLayout(null);
 		
 		txtUsuario = new JTextField();
-		txtUsuario.setBounds(316, 256, 200, 28);
-		frame.getContentPane().add(txtUsuario);
+		txtUsuario.setBackground(new Color(255, 255, 255));
+		txtUsuario.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
+		txtUsuario.setBounds(303, 210, 220, 29);
+		getContentPane().add(txtUsuario);
 		txtUsuario.setColumns(10);
 		
 		campoSenha = new JPasswordField();
-		campoSenha.setBounds(316, 354, 200, 28);
-		frame.getContentPane().add(campoSenha);
+		campoSenha.setBounds(303, 272, 220, 29);
+		getContentPane().add(campoSenha);
 		
-		JLabel lblSenha = new JLabel("Senha:");
-		lblSenha.setBounds(316, 329, 54, 14);
-		lblSenha.setFont(new Font("Tahoma", Font.BOLD, 15));
-		frame.getContentPane().add(lblSenha);
-		
-		JToggleButton botaoEntrar = new JToggleButton("Entrar");
-		botaoEntrar.setBounds(342, 418, 150, 25);
+		JToggleButton botaoEntrar = new JToggleButton("");
+		botaoEntrar.setBorderPainted(false);
+		botaoEntrar.setBounds(369, 382, 89, 23);
 		botaoEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Connection conn = Conexao.faz_conexao();
 					String sql = "select * from projeto_pi.usuarios where (email = ? and senha = ?)";
-					
 					PreparedStatement stmt = conn.prepareStatement(sql);
-					
 					stmt.setString(1, txtUsuario.getText());
 					stmt.setString(2, new String(campoSenha.getPassword()));
-					
 					ResultSet rs = stmt.executeQuery();
 					if(rs.next()) {
 						
-						JOptionPane.showMessageDialog(null, "Esse usuario existe!");
+						TelaMenu telamenu = new TelaMenu();
+						telamenu.setVisible(true);
+						setVisible(false);
+						
+						stmt.close();
+						
 					} else {
-						JOptionPane.showMessageDialog(null, "Usuario / Senha incorretas!","Erro 404",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Usuario / Senha incorretas!","Erro",JOptionPane.ERROR_MESSAGE);
 					}
-					
-					stmt.close();
-					conn.close();
-					
 				} catch (SQLException e2) {
 					e2.printStackTrace();
 				}
 			}				
 		});
-		botaoEntrar.setFont(new Font("Tahoma", Font.BOLD, 13));
-		frame.getContentPane().add(botaoEntrar);
+		botaoEntrar.setContentAreaFilled(false);
+		botaoEntrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		getContentPane().add(botaoEntrar);
 		
-		JButton botaoCadastrar = new JButton("Cadastrar");
-		botaoCadastrar.setBounds(422, 481, 112, 23);
+		JButton botaoCadastrar = new JButton("");
+		botaoCadastrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		botaoCadastrar.setContentAreaFilled(false);
+		botaoCadastrar.setBorderPainted(false);
+		botaoCadastrar.setBounds(360, 441, 109, 29);
+		getContentPane().add(botaoCadastrar);
 		botaoCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// A FUNÇÃO DO BOTÃO É CHAMAR UMA TELA E DEIXAR ELA VISIVEL;
@@ -133,13 +135,12 @@ public class PrimeiraTela {
 			}
 		});
 		botaoCadastrar.setFont(new Font("Tahoma", Font.BOLD, 14));
-		frame.getContentPane().add(botaoCadastrar);
-		
-		JLabel lblNewLabel = new JLabel("Voce ainda não tem uma conta?");
-		lblNewLabel.setBounds(229, 487, 183, 14);
-		lblNewLabel.setForeground(new Color(0, 0, 0));
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		frame.getContentPane().add(lblNewLabel);
+		getContentPane().add(botaoCadastrar);
+		botaoCadastrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(0, 0, 812, 587);
+		lblNewLabel.setIcon(new ImageIcon(PrimeiraTela.class.getResource("/imagens/LOGINLG.png")));
+		getContentPane().add(lblNewLabel);
 	
 	}
 }

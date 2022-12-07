@@ -12,7 +12,6 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -30,8 +29,8 @@ public class TelaCadastro extends JFrame {
 	private JPanel contentPane;
 	private JTextField textEmail;
 	private JTextField textCelular;
-	private JPasswordField pfSenha2;
-	private JPasswordField pfSenha2_2;
+	public JPasswordField pfSenha2;
+	public JPasswordField pfSenha2_2;
 	private JTextField textNome;
 
 	/**
@@ -83,40 +82,40 @@ public class TelaCadastro extends JFrame {
 		btnCadastrar2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				try {
-					
-					Connection conn = Conexao.faz_conexao();
-					String insertSQL = "INSERT INTO usuarios (nome, email, celular, senha) value (?,?,?,?)";
-					PreparedStatement stmt = conn.prepareStatement(insertSQL);
-					
-					stmt.setString(1, textNome.getText());
-					stmt.setString(2, textEmail.getText());
-					stmt.setString(3, textCelular.getText());
-					stmt.setString(4, new String (pfSenha2.getPassword()));
+				if(textNome.getText().isEmpty() || textEmail.getText().isEmpty() || textCelular.getText().isEmpty() ||
+						new String(pfSenha2.getPassword()).isEmpty()){
+							JOptionPane.showMessageDialog(null,"Todos os campos devem ser preenchidos","ERRO",JOptionPane.ERROR_MESSAGE);
+						}else {
+							try {
+								Connection conn = Conexao.faz_conexao();
+								String insertSQL = "INSERT INTO usuarios (nome, email, celular, senha) value (?,?,?,?)";
+								PreparedStatement stmt = conn.prepareStatement(insertSQL);
+								stmt.setString(1, textNome.getText());
+								stmt.setString(2, textEmail.getText());
+								stmt.setString(3, textCelular.getText());
+								stmt.setString(4, new String (pfSenha2.getPassword()));
+								
+								
+								if(new String(pfSenha2.getPassword()).equals(new String(pfSenha2_2.getPassword()))){								
+									stmt.execute();
+									JOptionPane.showMessageDialog(null, "Você foi cadastrado");
+									setVisible(false);
+									
+																		
+								}else{
+									JOptionPane.showMessageDialog(null, "Senhas não conferem!","",JOptionPane.ERROR_MESSAGE);	
+									pfSenha2.setText("");
+									pfSenha2_2.setText("");
+								}		
+								stmt.close();
+								conn.close();
+								
+							} catch (SQLException e2) {
+								JOptionPane.showMessageDialog(null, "Ocorreu um erro no cadastro");
+								e2.getNextException();
+							}
+						}
 				
-					if(new String(pfSenha2.getPassword()).equals(new String(pfSenha2_2.getPassword()))){	
-							
-						stmt.execute();
-							
-						JOptionPane.showMessageDialog(null, "Você foi cadastrado");
-						setVisible(false);
-							
-					}else{
-						JOptionPane.showMessageDialog(null, "Senhas não conferem!","ERRO 404",JOptionPane.ERROR_MESSAGE);
-							
-							
-						textNome.setText("");
-						textEmail.setText("");
-						textCelular.setText("");
-						pfSenha2.setText("");
-						pfSenha2_2.setText("");
-					}		
-					stmt.close();
-					conn.close();
-				} catch (SQLException e2) {
-					JOptionPane.showMessageDialog(null, "Ocorreu um erro no cadastro");
-					e2.getNextException();
-				}
 			}
 		});
 		btnCadastrar2.setFont(new Font("Tahoma", Font.BOLD, 14));
