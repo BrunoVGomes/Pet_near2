@@ -24,10 +24,6 @@ import java.awt.Cursor;
 
 public class PrimeiraTela extends JFrame {
 
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField txtUsuario;
 	private JPasswordField campoSenha;
@@ -67,6 +63,7 @@ public class PrimeiraTela extends JFrame {
 
 	public PrimeiraTela() {
 		initialize();
+		setLocationRelativeTo(null);
 		
 	}
 
@@ -95,23 +92,26 @@ public class PrimeiraTela extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Connection conn = Conexao.faz_conexao();
-					String sql = "select * from projeto_pi.usuarios where (email = ? and senha = ?)";
-					PreparedStatement stmt = conn.prepareStatement(sql);
+					String selectSQL = "select * from projeto_pi.usuarios where(email = ? and senha = ?) or"
+							+ "(celular = ? and senha = ?)";
+					PreparedStatement stmt = conn.prepareStatement(selectSQL);
 					stmt.setString(1, txtUsuario.getText());
 					stmt.setString(2, new String(campoSenha.getPassword()));
+					stmt.setString(3, txtUsuario.getText());
+					stmt.setString(4, new String(campoSenha.getPassword()));
+					
 					ResultSet rs = stmt.executeQuery();
 					if(rs.next()) {
-						
 						TelaMenu telamenu = new TelaMenu();
 						telamenu.setVisible(true);
 						setVisible(false);
-						
 						stmt.close();
-						
+						conn.close();
 					} else {
 						JOptionPane.showMessageDialog(null, "Usuario / Senha incorretas!","Erro",JOptionPane.ERROR_MESSAGE);
 					}
 				} catch (SQLException e2) {
+					System.out.println("Kaka");
 					e2.printStackTrace();
 				}
 			}				
@@ -131,7 +131,6 @@ public class PrimeiraTela extends JFrame {
 				// A FUNÇÃO DO BOTÃO É CHAMAR UMA TELA E DEIXAR ELA VISIVEL;
 				TelaCadastro cadastrotela = new TelaCadastro();
 				cadastrotela.setVisible(true);
-				
 			}
 		});
 		botaoCadastrar.setFont(new Font("Tahoma", Font.BOLD, 14));

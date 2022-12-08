@@ -33,6 +33,23 @@ public class TelaAlterar_Dados extends JFrame{
 
 
 	public static void main(String[] args) {
+		try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            System.err.println(ex);
+        } catch (InstantiationException ex) {
+        	System.err.println(ex);
+        } catch (IllegalAccessException ex) {
+        	System.err.println(ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        	System.err.println(ex);
+        }
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -50,6 +67,7 @@ public class TelaAlterar_Dados extends JFrame{
 	 */
 	public TelaAlterar_Dados() {
 		initialize();
+		setLocationRelativeTo(null);
 	}
 
 	/**
@@ -61,29 +79,31 @@ public class TelaAlterar_Dados extends JFrame{
 		getContentPane().setLayout(null);
 		
 		JButton btnAlterar = new JButton("");
+		btnAlterar.setContentAreaFilled(false);
+		btnAlterar.setBorderPainted(false);
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(textNome.getText().isEmpty() || textEmail.getText().isEmpty() || textCelular.getText().isEmpty() ||
 						new String(pfSenha.getPassword()).isEmpty()){
-					JOptionPane.showMessageDialog(null,"Todos os campos devem ser preenchidos","ERRO",JOptionPane.INFORMATION_MESSAGE);
-					JOptionPane.showMessageDialog(null,"Caso queira mudar apenas uma coluna, repita as outras","ERRO",JOptionPane.INFORMATION_MESSAGE);
-
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos","",JOptionPane.ERROR_MESSAGE);
 				}else {
 					try {
 						Connection conn = Conexao.faz_conexao();
-						String updateSQL = "UPDATE usuarios SET nome = ?, email = ?, celular = ?, senha = ?"
-								+ " WHERE id = id";
+						String updateSQL = "UPDATE usuarios SET nome = ?, email = ?, celular = ?, senha = ?";
 						
 						PreparedStatement stmt = conn.prepareStatement(updateSQL);
+						
 						
 						stmt.setString(1, textNome.getText());
 						stmt.setString(2, textEmail.getText());
 						stmt.setString(3, textCelular.getText());
 						stmt.setString(4, new String (pfSenha.getPassword()));
 						
+						
 						stmt.executeUpdate();
 						stmt.close();
 						conn.close();
+						setVisible(false);
 						JOptionPane.showMessageDialog(null, "Campos alterados com sucesso");
 					} catch (SQLException e1) {
 						
@@ -93,7 +113,7 @@ public class TelaAlterar_Dados extends JFrame{
 			}
 		});
 		btnAlterar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnAlterar.setBounds(413, 478, 114, 35);
+		btnAlterar.setBounds(390, 462, 157, 65);
 		getContentPane().add(btnAlterar);
 		
 		textNome = new JTextField();
@@ -116,6 +136,7 @@ public class TelaAlterar_Dados extends JFrame{
 		getContentPane().add(pfSenha);
 		
 		btnPerfil = new JButton("");
+		btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPerfil.setContentAreaFilled(false);
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -123,23 +144,43 @@ public class TelaAlterar_Dados extends JFrame{
 			}
 		});
 		btnPerfil.setBorderPainted(false);
-		btnPerfil.setBounds(0, 208, 89, 23);
+		btnPerfil.setBounds(10, 159, 121, 44);
 		getContentPane().add(btnPerfil);
 		
 		btnDeletar = new JButton("");
+		btnDeletar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AvisoDelete avisodelete = new AvisoDelete();
-				avisodelete.setVisible(true);
+				Object[] options = { "Confirmar", "Cancelar" };
+				int opcao = JOptionPane.showOptionDialog(null, "Você tem certeza ?", "Informação",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);				
+				
+				if(opcao == 0) {
+					try {
+						Connection conn = Conexao.faz_conexao();
+						String deleteSQL = "DELETE * From usuarios";
+						PreparedStatement stmt = conn.prepareStatement(deleteSQL);
+						
+						PrimeiraTela primeiratela = new PrimeiraTela();
+						primeiratela.setVisible(true);
+						setVisible(false);
+						JOptionPane.showMessageDialog(null, "Sua conta foi exluida com sucesso!","",JOptionPane.YES_OPTION);
+						stmt.execute();
+						
+					} catch (SQLException e1) {
+						System.out.println("jaja");
+						e1.printStackTrace();
+					}
+				}
 			}
 		});
 		btnDeletar.setContentAreaFilled(false);
 		btnDeletar.setBorderPainted(false);
-		btnDeletar.setBounds(0, 308, 89, 23);
+		btnDeletar.setBounds(10, 309, 121, 44);
 		getContentPane().add(btnDeletar);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(TelaAlterar_Dados.class.getResource("/imagens/4b187e8e-188d-4193-8436-6b1c1534c863.png")));
+		lblNewLabel.setIcon(new ImageIcon(TelaAlterar_Dados.class.getResource("/imagens/ALTERAR_DADOS.png")));
 		lblNewLabel.setBounds(0, 0, 812, 587);
 		getContentPane().add(lblNewLabel);
 	}

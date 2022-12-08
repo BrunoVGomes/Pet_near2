@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Cursor;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -9,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import conexao_view.Conexao;
 
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,6 +23,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
 public class TelaCadastro extends JFrame {
+	
 
 	/**
 	 * 
@@ -36,7 +39,8 @@ public class TelaCadastro extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {		
+	
+	public static void main(String[] args) {
 		try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -65,12 +69,17 @@ public class TelaCadastro extends JFrame {
 			}
 		});
 	}
+	public TelaCadastro() {
+		initialize();
+		setLocationRelativeTo(null);
+		
+	}
 
 	/**
 	 * Create the frame.
 	 */
-	public TelaCadastro() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	private void initialize() {
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 828, 626);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -78,7 +87,7 @@ public class TelaCadastro extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnCadastrar2 = new JButton("Cadastrar");
+		JButton btnCadastrar2 = new JButton("");
 		btnCadastrar2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -118,56 +127,43 @@ public class TelaCadastro extends JFrame {
 				
 			}
 		});
-		btnCadastrar2.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnCadastrar2.setBounds(313, 514, 154, 32);
-		contentPane.add(btnCadastrar2);
-		
-		JLabel lblNome = new JLabel("Nome Completo");
-		lblNome.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNome.setBounds(229, 69, 145, 26);
-		contentPane.add(lblNome);
-		
-		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblEmail.setBounds(229, 149, 45, 26);
-		contentPane.add(lblEmail);
+		btnCadastrar2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCadastrar2.setContentAreaFilled(false);
+		btnCadastrar2.setBorderPainted(false);
+		btnCadastrar2.setBounds(362, 436, 107, 47);
+		getContentPane().add(btnCadastrar2);
 		
 		textEmail = new JTextField();
-		textEmail.setBounds(239, 186, 300, 32);
-		contentPane.add(textEmail);
+		textEmail.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
 		textEmail.setColumns(10);
-		
-		JLabel lblCelular = new JLabel("Celular");
-		lblCelular.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblCelular.setBounds(229, 227, 67, 14);
-		contentPane.add(lblCelular);
+		textEmail.setBounds(307, 253, 220, 29);
+		contentPane.add(textEmail);
 		
 		textCelular = new JTextField();
-		textCelular.setBounds(239, 252, 171, 32);
-		contentPane.add(textCelular);
+		textCelular.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
 		textCelular.setColumns(10);
-		
-		JLabel lblSenha2 = new JLabel("Senha");
-		lblSenha2.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblSenha2.setBounds(229, 295, 56, 14);
-		contentPane.add(lblSenha2);
+		textCelular.setBounds(307, 301, 220, 29);
+		contentPane.add(textCelular);
 		
 		pfSenha2 = new JPasswordField();
-		pfSenha2.setBounds(239, 320, 300, 32);
-		contentPane.add(pfSenha2);
-		
-		JLabel lblconfirmacaoSenha = new JLabel("Confirmar Senha");
-		lblconfirmacaoSenha.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblconfirmacaoSenha.setBounds(227, 360, 171, 26);
-		contentPane.add(lblconfirmacaoSenha);
+		pfSenha2.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
+		pfSenha2.setBounds(307, 348, 220, 29);
+		getContentPane().add(pfSenha2);
 		
 		pfSenha2_2 = new JPasswordField();
-		pfSenha2_2.setBounds(239, 397, 300, 32);
-		contentPane.add(pfSenha2_2);
+		pfSenha2_2.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
+		pfSenha2_2.setBounds(307, 396, 220, 29);
+		getContentPane().add(pfSenha2_2);
 		
 		textNome = new JTextField();
-		textNome.setBounds(239, 106, 300, 32);
-		contentPane.add(textNome);
+		textNome.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
+		textNome.setBounds(307, 206, 220, 29);
+		getContentPane().add(textNome);
 		textNome.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(0, 0, 812, 587);
+		lblNewLabel.setIcon(new ImageIcon(TelaCadastro.class.getResource("/imagens/CADASTROdsadsa.png")));
+		getContentPane().add(lblNewLabel);
 	}
 }
