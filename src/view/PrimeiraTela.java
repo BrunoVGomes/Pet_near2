@@ -70,24 +70,25 @@ public class PrimeiraTela extends JFrame {
 
 	//AQUI TEM OS NOMES DAS VARIAVEIS DA TELA, TEM O LABEL, O BOTÃO ETC
 	private void initialize() {
-		setBounds(100, 100, 828, 626);
+		setBounds(100, 100, 1382, 798);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		txtUsuario = new JTextField();
 		txtUsuario.setBackground(new Color(255, 255, 255));
 		txtUsuario.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
-		txtUsuario.setBounds(303, 210, 220, 29);
+		txtUsuario.setBounds(505, 204, 314, 38);
 		getContentPane().add(txtUsuario);
 		txtUsuario.setColumns(10);
 		
 		campoSenha = new JPasswordField();
-		campoSenha.setBounds(303, 272, 220, 29);
+		campoSenha.setBounds(505, 286, 314, 38);
 		getContentPane().add(campoSenha);
 		
 		JToggleButton botaoEntrar = new JToggleButton("");
 		botaoEntrar.setBorderPainted(false);
-		botaoEntrar.setBounds(369, 382, 89, 23);
+		botaoEntrar.setBounds(590, 432, 136, 48);
 		botaoEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -124,11 +125,11 @@ public class PrimeiraTela extends JFrame {
 		botaoCadastrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		botaoCadastrar.setContentAreaFilled(false);
 		botaoCadastrar.setBorderPainted(false);
-		botaoCadastrar.setBounds(360, 441, 109, 29);
+		botaoCadastrar.setBounds(571, 508, 174, 63);
 		getContentPane().add(botaoCadastrar);
 		botaoCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// A FUNÇÃO DO BOTÃO É CHAMAR UMA TELA E DEIXAR ELA VISIVEL;
+
 				TelaCadastro cadastrotela = new TelaCadastro();
 				cadastrotela.setVisible(true);
 			}
@@ -137,8 +138,8 @@ public class PrimeiraTela extends JFrame {
 		getContentPane().add(botaoCadastrar);
 		botaoCadastrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(0, 0, 812, 587);
-		lblNewLabel.setIcon(new ImageIcon(PrimeiraTela.class.getResource("/imagens/LOGINLG.png")));
+		lblNewLabel.setBounds(0, 0, 1390, 747);
+		lblNewLabel.setIcon(new ImageIcon(PrimeiraTela.class.getResource("/imagens/Logintela.png")));
 		getContentPane().add(lblNewLabel);
 	
 	}

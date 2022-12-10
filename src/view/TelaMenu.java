@@ -27,7 +27,7 @@ public class TelaMenu extends JFrame{
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main (String[] args) {
 		try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -70,9 +70,11 @@ public class TelaMenu extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		setBounds(100, 100, 828, 626);
+		setBounds(100, 100, 1366, 798);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 		
 		JButton btnAlterar_Dados = new JButton("");
 		btnAlterar_Dados.addActionListener(new ActionListener() {
@@ -84,7 +86,7 @@ public class TelaMenu extends JFrame{
 		btnAlterar_Dados.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAlterar_Dados.setContentAreaFilled(false);
 		btnAlterar_Dados.setBorderPainted(false);
-		btnAlterar_Dados.setBounds(20, 240, 109, 39);
+		btnAlterar_Dados.setBounds(20, 310, 141, 47);
 		getContentPane().add(btnAlterar_Dados);
 		
 		JButton btnDeletar = new JButton("");
@@ -117,19 +119,8 @@ public class TelaMenu extends JFrame{
 		});
 		btnDeletar.setBorderPainted(false);
 		btnDeletar.setContentAreaFilled(false);
-		btnDeletar.setBounds(20, 319, 103, 33);
+		btnDeletar.setBounds(20, 400, 141, 47);
 		getContentPane().add(btnDeletar);
-		
-		JButton btnVoltarTela = new JButton("");
-		btnVoltarTela.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {	
-				
-			}
-		});
-		btnVoltarTela.setBorderPainted(false);
-		btnVoltarTela.setContentAreaFilled(false);
-		btnVoltarTela.setBounds(10, 444, 33, 39);
-		getContentPane().add(btnVoltarTela);
 		
 		JButton btnVoltar = new JButton("");
 		btnVoltar.addActionListener(new ActionListener() {
@@ -143,12 +134,12 @@ public class TelaMenu extends JFrame{
 		btnVoltar.setContentAreaFilled(false);
 		btnVoltar.setBorderPainted(false);
 		btnVoltar.setVerifyInputWhenFocusTarget(false);
-		btnVoltar.setBounds(20, 532, 43, 44);
+		btnVoltar.setBounds(33, 658, 52, 47);
 		getContentPane().add(btnVoltar);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(TelaMenu.class.getResource("/imagens/MENU.png")));
-		lblNewLabel.setBounds(0, 0, 812, 587);
+		lblNewLabel.setBounds(0, 0, 1368, 745);
 		getContentPane().add(lblNewLabel);
 	}
 }

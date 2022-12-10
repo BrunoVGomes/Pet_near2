@@ -32,7 +32,7 @@ public class TelaAlterar_Dados extends JFrame{
 	private JButton btnDeletar;
 
 
-	public static void main(String[] args) {
+	public static void main (String[] args) {
 		try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -74,9 +74,11 @@ public class TelaAlterar_Dados extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		setBounds(100, 100, 828, 626);
+		setBounds(100, 100, 1382, 833);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 		
 		JButton btnAlterar = new JButton("");
 		btnAlterar.setContentAreaFilled(false);
@@ -85,7 +87,9 @@ public class TelaAlterar_Dados extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				if(textNome.getText().isEmpty() || textEmail.getText().isEmpty() || textCelular.getText().isEmpty() ||
 						new String(pfSenha.getPassword()).isEmpty()){
-					JOptionPane.showMessageDialog(null, "Preencha todos os campos","",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos","*AVISO*",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Caso queira mudar apenas um campo repita os outros","*AVISO*",JOptionPane.DEFAULT_OPTION);
+
 				}else {
 					try {
 						Connection conn = Conexao.faz_conexao();
@@ -113,26 +117,26 @@ public class TelaAlterar_Dados extends JFrame{
 			}
 		});
 		btnAlterar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnAlterar.setBounds(390, 462, 157, 65);
+		btnAlterar.setBounds(641, 581, 157, 65);
 		getContentPane().add(btnAlterar);
 		
 		textNome = new JTextField();
-		textNome.setBounds(321, 105, 381, 35);
+		textNome.setBounds(435, 193, 532, 35);
 		getContentPane().add(textNome);
 		textNome.setColumns(10);
 		
 		textEmail = new JTextField();
 		textEmail.setColumns(10);
-		textEmail.setBounds(321, 176, 381, 35);
+		textEmail.setBounds(435, 282, 532, 35);
 		getContentPane().add(textEmail);
 		
 		textCelular = new JTextField();
 		textCelular.setColumns(10);
-		textCelular.setBounds(321, 248, 381, 35);
+		textCelular.setBounds(435, 364, 532, 35);
 		getContentPane().add(textCelular);
 		
 		pfSenha = new JPasswordField();
-		pfSenha.setBounds(321, 319, 381, 35);
+		pfSenha.setBounds(435, 455, 532, 35);
 		getContentPane().add(pfSenha);
 		
 		btnPerfil = new JButton("");
@@ -144,7 +148,7 @@ public class TelaAlterar_Dados extends JFrame{
 			}
 		});
 		btnPerfil.setBorderPainted(false);
-		btnPerfil.setBounds(10, 159, 121, 44);
+		btnPerfil.setBounds(36, 220, 121, 44);
 		getContentPane().add(btnPerfil);
 		
 		btnDeletar = new JButton("");
@@ -168,7 +172,6 @@ public class TelaAlterar_Dados extends JFrame{
 						stmt.execute();
 						
 					} catch (SQLException e1) {
-						System.out.println("jaja");
 						e1.printStackTrace();
 					}
 				}
@@ -176,12 +179,26 @@ public class TelaAlterar_Dados extends JFrame{
 		});
 		btnDeletar.setContentAreaFilled(false);
 		btnDeletar.setBorderPainted(false);
-		btnDeletar.setBounds(10, 309, 121, 44);
+		btnDeletar.setBounds(36, 403, 121, 44);
 		getContentPane().add(btnDeletar);
 		
+		JButton btnVoltar = new JButton("");
+		btnVoltar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PrimeiraTela primeiratela = new PrimeiraTela();
+				primeiratela.setVisible(true);
+				setVisible(false); 
+			}
+		});
+		btnVoltar.setContentAreaFilled(false);
+		btnVoltar.setBorderPainted(false);
+		btnVoltar.setBounds(36, 658, 52, 50);
+		getContentPane().add(btnVoltar);
+		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(TelaAlterar_Dados.class.getResource("/imagens/ALTERAR_DADOS.png")));
-		lblNewLabel.setBounds(0, 0, 812, 587);
+		lblNewLabel.setIcon(new ImageIcon(TelaAlterar_Dados.class.getResource("/imagens/Alterar_Dados.png")));
+		lblNewLabel.setBounds(0, 0, 1366, 749);
 		getContentPane().add(lblNewLabel);
 	}
 }
